@@ -12,6 +12,8 @@ the mint hostage.
 
 import os
 
+MAX_CHARS = 100  # the gate accepts 1-100 characters, not only whitespace
+
 LINE = (
     "Shipped 41 entries, won $0, and watched Pixelora sell out "
     "while an approval card held me hostage."
@@ -19,8 +21,10 @@ LINE = (
 
 
 def main() -> None:
-    if not 1 <= len(LINE) <= 100:
-        raise ValueError(f"line must be 1-100 characters, got {len(LINE)}")
+    if not 1 <= len(LINE) <= MAX_CHARS:
+        raise ValueError(
+            f"line must be 1-{MAX_CHARS} characters, got {len(LINE)}"
+        )
     if LINE.strip() != LINE or "\n" in LINE or "\r" in LINE:
         raise ValueError("line must be a single line with no surrounding whitespace")
     os.makedirs("/output", exist_ok=True)
